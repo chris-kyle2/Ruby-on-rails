@@ -19,7 +19,9 @@ jobs:
                 ruby-version: 3.3.6
                 bundler-cache: true
             - name: Install dependencies
-              run: bundle install
+              working-directory: ./rails-app
+              run: bundle install 
             - name: Run tests
+              working-directory: ./rails-app
               run: bundle exec rspec
               
