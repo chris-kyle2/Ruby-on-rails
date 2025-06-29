@@ -1,0 +1,25 @@
+name: Continuous Integration pipeline for Rails app
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build-and-test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+              with:
+                path: rails-app
+            - name: Setup Ruby
+              uses: ruby/setup-ruby@v1
+              with:
+                ruby-version: 3.3.6
+                bundler-cache: true
+            - name: Install dependencies
+              run: bundle install
+            - name: Run tests
+              run: bundle exec rspec
+              
