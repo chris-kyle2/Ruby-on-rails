@@ -8,6 +8,24 @@ on:
 jobs:
     build-and-test:
         runs-on: ubuntu-latest
+        services:
+            postgresql:
+                image: postgres:13
+                env:
+                    POSTGRES_USER: postgres
+                    POSTGRES_PASSWORD: postgres
+                    POSTGRES_DB: rails_app_development
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+        env:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: rails_app_development
+            POSTGRES_PORT: 5432
+            
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
