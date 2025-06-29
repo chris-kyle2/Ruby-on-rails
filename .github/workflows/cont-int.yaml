@@ -92,7 +92,7 @@ jobs:
           ls -la
           cd rails-app
           pwd
-          docker build -t ${{DOCKER_USERNAME}}/${{REPO_NAME}}:${{GITHUB_SHA}} .
-          docker login -u ${{DOCKER_USERNAME}} -p ${{DOCKER_PASSWORD}} 
-          docker push ${{DOCKER_USERNAME}}/${{REPO_NAME}}:${{GITHUB_SHA}}
+          docker build -t $DOCKER_USERNAME/$REPO_NAME:$GITHUB_SHA .
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD 
+          docker push $DOCKER_USERNAME/$REPO_NAME:$GITHUB_SHA
 
