@@ -28,5 +28,9 @@ jobs:
                bundle install 
             - name: Run tests
               working-directory: ./rails-app
-              run: bundle exec rspec
+              run: |
+               ls -la
+               cd rails-app
+               pwd
+               bundle exec rspec
               
