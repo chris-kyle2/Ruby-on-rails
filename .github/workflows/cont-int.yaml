@@ -23,6 +23,8 @@ jobs:
               working-directory: ./rails-app
               run: |
                ls -la
+               cd rails-app
+               pwd
                bundle install 
             - name: Run tests
               working-directory: ./rails-app
