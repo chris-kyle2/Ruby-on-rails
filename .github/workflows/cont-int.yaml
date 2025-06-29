@@ -54,7 +54,10 @@ jobs:
           bundle install
 
       - name: Setup database
-        run: |
+        run: | 
+          ls -la
+          cd rails-app
+          pwd
           bin/rails db:create
           bin/rails db:schema:load
 
