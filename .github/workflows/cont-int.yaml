@@ -75,9 +75,24 @@ jobs:
       
         
 
-      - name: Run tests
-        run: |
+    #   - name: Run tests
+    #     run: |
+    #       ls -la
+    #       cd rails-app
+    #       pwd
+    #       bundle exec rspec
+
+      -  name: Build Docker image
+         env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          REPO_NAME: ${{ secrets.REPO_NAME }}
+               
+         run: |
           ls -la
           cd rails-app
           pwd
-          bundle exec rspec
+          docker build -t ${{DOCKER_USERNAME}}/${{REPO_NAME}}:${{GITHUB_SHA}} .
+          docker login -u ${{DOCKER_USERNAME}} -p ${{DOCKER_PASSWORD}} 
+          docker push ${{DOCKER_USERNAME}}/${{REPO_NAME}}:${{GITHUB_SHA}}
+
