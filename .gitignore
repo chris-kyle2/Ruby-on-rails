@@ -68,3 +68,6 @@ kubeconfig
 /infrastructure/*.err
 /infrastructure/secrets.*
 /infrastructure/credentials.*
+
+#key-pair
+/infrastructure/devops-kp.pem

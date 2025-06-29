@@ -1,15 +1,12 @@
-output "master_public_ip" {
-  description = "Public IP address of the Kubernetes master node"
-  value       = aws_instance.k8s_master.public_ip
+output "bastion_public_ip" {
+  description = "Public IP address of the bastion host"
+  value = aws_instance.bastion_host.public_ip
 }
 
-output "worker_public_ips" {
-  description = "Public IP addresses of the Kubernetes worker nodes"
-  value       = aws_instance.k8s_workers[*].public_ip
+output "master_private_ip" {
+  value = aws_instance.k8s_master.private_ip
 }
 
-
-output "security_group_id" {
-  description = "ID of the security group"
-  value       = aws_security_group.k8s_nodes.id
-} 
+output "worker_private_ips" {
+  value = [for i in aws_instance.k8s_workers : "${i.tags.Name}-${i.private_ip}"]
+}

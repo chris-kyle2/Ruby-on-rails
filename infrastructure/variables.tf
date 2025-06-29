@@ -34,8 +34,11 @@ variable "worker_count" {
   type        = number
   default     = 2
 }
-
-variable "vpc_id" {
-  description = "ID of the VPC"
-  type        = string
+variable "subnets" {
+  description = "A map of subnet configurations"
+  type = map(object({
+    cidr_block        = string
+    az                = string
+    map_public_ip     = bool
+  }))
 }
