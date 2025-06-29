@@ -1,54 +1,58 @@
 name: Continuous Integration pipeline for Rails app
 
 on:
-    push:
-        branches:
-            - main
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
-    build-and-test:
-        runs-on: ubuntu-latest
-        services:
-            postgresql:
-                image: postgres:13
-                env:
-                    POSTGRES_USER: postgres
-                    POSTGRES_PASSWORD: postgres
-                    POSTGRES_DB: rails_app_development
-                options: >-
-                    --health-cmd pg_isready
-                    --health-interval 10s
-                    --health-timeout 5s
-                    --health-retries 5
+  build-and-test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13
         env:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: postgres
-            POSTGRES_DB: rails_app_development
-            POSTGRES_PORT: 5432
-            
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-              with:
-                path: rails-app
-            - name: Setup Ruby
-              uses: ruby/setup-ruby@v1
-              with:
-                ruby-version: 3.1.2
-                bundler-cache: true
-                working-directory: ./rails-app
-            - name: Install dependencies
-              working-directory: ./rails-app
-              run: |
-               ls -la
-               cd rails-app
-               pwd
-               bundle install 
-            - name: Run tests
-              working-directory: ./rails-app
-              run: |
-               ls -la
-               cd rails-app
-               pwd
-               bundle exec rspec
-              
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: Budgy_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DB_HOST: localhost
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_PORT: 5432
+      RAILS_ENV: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: List files
+        run: |
+          ls -la
+          pwd
+          
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1.2
+          bundler-cache: true
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Setup database
+        run: |
+          bin/rails db:create
+          bin/rails db:schema:load
+
+      - name: Run tests
+        run: bundle exec rspec
