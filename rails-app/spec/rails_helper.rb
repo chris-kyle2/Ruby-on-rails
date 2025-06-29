@@ -9,7 +9,7 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 require 'capybara/rspec'
 require 'webdrivers' 
-Webdrivers::Chromedriver.required_version = '137.0.7151.119'
+Webdrivers::Chromedriver.required_version = '138.0.7204.49'
 
 
 
