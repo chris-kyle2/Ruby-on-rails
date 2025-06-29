@@ -61,8 +61,6 @@ jobs:
           bin/rails db:create
           bin/rails db:schema:load
 
-      - name: Setup Chrome
-        uses: browser-actions/setup-chrome@latest
         
       - name: Install ChromeDriver matching Chrome
         env:
